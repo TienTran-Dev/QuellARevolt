@@ -1,4 +1,5 @@
-﻿using Unity.Jobs;
+﻿using System.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,11 +21,12 @@ public class PlayerMovemnet : MonoBehaviour
     private float rotationX;
     private CharacterController characterController;
     private Animator animator;
+  
+   
 
     [SerializeField]
     private BoxCollider IsJumping;
-
-    private bool canMove = true;
+    public bool canMove = true;
     private bool canJump = false;
 
     void Start()
@@ -97,7 +99,6 @@ public class PlayerMovemnet : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             float moveSpeed = 5f;
-            float rotationSpeed = 200f;
 
             if (Input.GetKey(KeyCode.S))
             {
@@ -105,10 +106,14 @@ public class PlayerMovemnet : MonoBehaviour
                 transform.position -= transform.forward * moveSpeed * Time.deltaTime;
                 // Bật animation đi lùi
                 animator.SetBool("IsWalkingBack", true);
+                animator.SetBool("IsFastRunning", false);
             }
             else
             {
+                
                 animator.SetBool("IsWalkingBack", false);
+            
+                
             }
 
             //Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
@@ -167,16 +172,7 @@ public class PlayerMovemnet : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
-    //private void IsCanLookAround()
-    //{
-    //    if (canMove)
-    //    {
-    //        //rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-    //        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-    //        //playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-    //        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Horizontal") * lookSpeed, 0);
-    //    }
-    //}
+ 
     void Update()
     {
 
@@ -184,6 +180,7 @@ public class PlayerMovemnet : MonoBehaviour
         IsCanJump();
         IsCanLookAround();
         IsCanSitDown();
+      
 
     }
 }
