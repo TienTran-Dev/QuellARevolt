@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private LayerMask targetPlayer;
     private Animator animatorAttack;
-
+   
     private void Start()
     {
         animatorAttack =  GetComponent<Animator>();
